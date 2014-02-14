@@ -221,6 +221,12 @@ describe CanCan::Ability do
     @ability.can?(:read, 2, 3).should be_false
   end
 
+  it "should still check conditions even if a class is passed in" do
+    @ability.can :read, Integer, :to_s => "1"
+    @ability.can?(:read, Integer, :to_s => "1").should be_true
+    @ability.can?(:read, Integer, :to_s => "2").should be_false
+  end
+
   it "should use conditions as third parameter and determine abilities from it" do
     @ability.can :read, Range, :begin => 1, :end => 3
     @ability.can?(:read, 1..3).should be_true
