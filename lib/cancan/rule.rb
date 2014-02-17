@@ -36,7 +36,7 @@ module CanCan
         nested_subject_matches_conditions?(subject)
       elsif @conditions.kind_of?(Hash) && !subject_class?(subject)
         matches_conditions_hash?(subject)
-      elsif @conditions.kind_of?(Hash) && subject_class?(subject) && extra_args.any? && @conditions.present?
+      elsif @conditions.kind_of?(Hash) && subject_class?(subject) && extra_args.any? && extra_args.map(&:any?).include?(true) && @conditions.present?
         matches_arguments_to_conditions_hash?(extra_args)
       else
         # Don't stop at "cannot" definitions when there are conditions.
